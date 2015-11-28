@@ -6,6 +6,23 @@ Android library to create Android UI elements that have dynamic properties in re
 Integrate into your app:
 ---------------------
 1.  Add module to your application's build.gradle.
+```
+compile 'com.example.dynamoui:dynamoui:1.0@aar'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.firebase:firebase-client-android:2.4.1+'
+    compile 'com.koushikdutta.ion:ion:2.+'
+```
+Add this to your android object in your app's build.gradle:
+```
+packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+```
+
+https://github.com/google/iosched.git
 2.  Initialize the Dynamo Context in your Activity's onCreate before setting the content view.
 ```
     Dynamo.getContext().init(this, "MyCoolApp");

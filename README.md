@@ -22,7 +22,16 @@ packagingOptions {
     }
 ```
 
-https://github.com/google/iosched.git
+Add this to your project's build.gradle.
+```
+allprojects {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+}
+```
+
 2.  Initialize the Dynamo Context in your Activity's onCreate before setting the content view.
 ```
     Dynamo.getContext().init(this, "MyCoolApp");

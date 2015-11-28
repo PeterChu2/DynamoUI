@@ -6,10 +6,12 @@ version = '1.0'
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "/home/peter/.m2/repository")
+            repository(url: "file:///home/peter/.m2/repository")
         }
     }
 }
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"

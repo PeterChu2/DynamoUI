@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dynamo_id" format="string" />
+    <declare-styleable name="DynamoButton">
+        <attr name="dynamo_id" />
+    </declare-styleable>
+    <declare-styleable name="DynamoTextView">
+        <attr name="dynamo_id" />
+    </declare-styleable>
+    <declare-styleable name="DynamoImageView">
+        <attr name="dynamo_id" />
+    </declare-styleable>
+    <declare-styleable name="DynamoWebView">
+        <attr name="dynamo_id" />
+    </declare-styleable>
+</resources>

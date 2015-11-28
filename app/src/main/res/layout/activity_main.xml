@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.peter.dynamicui.MainActivity">
+
+    <com.example.dynamoui.views.DynamoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamo_text_view"
+        android:text="Hello World!"
+        app:dynamo_id="text_view_1" />
+    <com.example.dynamoui.views.DynamoButton
+        android:id="@+id/dynamo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dynamo_text_view"
+        android:text="Hello World!"
+        app:dynamo_id="button_1" />
+    <com.example.dynamoui.views.DynamoImageView
+        android:id="@+id/dynamo_image_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/dynamo_button"
+        app:dynamo_id="image_view_1" />
+    <com.example.dynamoui.views.DynamoWebView
+        android:id="@+id/dynamo_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/dynamo_image_view"
+        app:dynamo_id="web_view_1" />
+</RelativeLayout>

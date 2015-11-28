@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.example.dynamoui.R;
 import com.example.dynamoui.core.Dynamo;
 import com.example.dynamoui.core.DynamoContextImpl;
 import com.firebase.client.DataSnapshot;

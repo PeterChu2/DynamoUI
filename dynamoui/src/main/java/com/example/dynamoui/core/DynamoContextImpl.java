@@ -1,7 +1,8 @@
 package com.example.dynamoui.core;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
@@ -16,11 +17,31 @@ import com.firebase.client.ValueEventListener;
  */
 public class DynamoContextImpl implements DynamoContext {
     private Firebase mRef;
+    private static String sTheme = null;
+
+    protected DynamoContextImpl() {
+
+    }
+
     @Override
     public synchronized void init(Context context, String appName) {
         Firebase.setAndroidContext(context);
         mRef = new Firebase(String.format("%s/%s", Dynamo.END_POINT, appName));
-        initializeThemeListener(context);
+        if(sTheme != null) {
+            if ("DARK".equals(sTheme)) {
+                context.setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
+            } else if ("LIGHT".equals(sTheme)) {
+                context.setTheme(R.style.Theme_AppCompat_Light);
+            } else if ("DEFAULT".equals(sTheme)) {
+                context.setTheme(R.style.Theme_AppCompat);
+            } else if ("NO BAR".equals(sTheme)) {
+                context.setTheme(R.style.Theme_AppCompat_NoActionBar);
+            } else if ("COMPACT MENU".equals(sTheme)) {
+                context.setTheme(R.style.Theme_AppCompat_CompactMenu);
+            }
+        } else {
+            initializeThemeListener(context);
+        }
     }
     public Firebase getFirebaseRef() {
         return mRef;
@@ -31,32 +52,27 @@ public class DynamoContextImpl implements DynamoContext {
     }
     private void initializeThemeListener(final Context context) {
         final Firebase themeRef = mRef.child("theme");
-        themeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String theme = null;
-                if(dataSnapshot.getValue() != null) {
-                    theme = dataSnapshot.getValue().toString();
-                }
-                if(theme != null) {
-                    if("DARK".equals(theme)) {
-                        context.setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
-                    } else if("LIGHT".equals(theme)) {
-                        context.setTheme(R.style.Theme_AppCompat_Light);
-                    } else if("DEFAULT".equals(theme)) {
-                        context.setTheme(R.style.Theme_AppCompat);
-                    } else if("NO BAR".equals(theme)) {
-                        context.setTheme(R.style.Theme_AppCompat_NoActionBar);
+        if (context instanceof Activity) {
+            themeRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String theme = null;
+                    if (dataSnapshot.getValue() != null) {
+                        theme = dataSnapshot.getValue().toString();
                     }
-//                    context.setTheme(R.style);
-//                    context.setTheme(Resources.Theme.AppCompat.Light.DarkActionBar);
+                    if (theme != null) {
+                        sTheme = theme;
+                        Activity activity = (Activity) context;
+                        activity.finish();
+                        activity.startActivity(new Intent(activity, activity.getClass()));
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                // NOP
-            }
-        });
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    // NOP
+                }
+            });
+        }
     }
 }

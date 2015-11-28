@@ -72,6 +72,14 @@ public class DynamoButton extends Button {
                             if(fontSize != null) {
                                 DynamoButton.this.setTextSize(Float.valueOf(fontSize));
                             }
+                            String width = value.get("width");
+                            String height = value.get("height");
+                            if(width != null) {
+                                DynamoButton.this.getLayoutParams().width = Integer.valueOf(width);
+                            }
+                            if(height != null) {
+                                DynamoButton.this.getLayoutParams().height = Integer.valueOf(height);
+                            }
                         }
                     }
                     @Override

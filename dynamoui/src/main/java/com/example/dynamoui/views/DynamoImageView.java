@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
 import com.example.dynamoui.core.Dynamo;
 import com.example.dynamoui.core.DynamoContextImpl;
 import com.firebase.client.DataSnapshot;
@@ -49,6 +50,10 @@ public class DynamoImageView extends ImageView {
         }
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
+
+        if(mContext == null || mContext.getFirebaseRef() == null) {
+            return;
+        }
         mRef = mContext.getFirebaseRef().child("image_views").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {

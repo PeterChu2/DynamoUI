@@ -13,7 +13,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.koushikdutta.ion.Ion;
 
 import java.util.HashMap;
 
@@ -52,6 +51,9 @@ public class DynamoWebView extends WebView {
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
         DynamoWebView.this.setWebViewClient(new WebViewClient());
+        if(mContext == null || mContext.getFirebaseRef() == null) {
+            return;
+        }
         mRef = mContext.getFirebaseRef().child("web_views").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {

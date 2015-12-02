@@ -15,24 +15,37 @@
         android:layout_height="wrap_content"
         android:id="@+id/dynamo_text_view"
         android:text="Hello World!"
-        app:dynamo_id="text_view_1" />
+        app:dynamo_id="text_view_1"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
     <com.example.dynamoui.views.DynamoButton
         android:id="@+id/dynamo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dynamo_text_view"
         android:text="Hello World!"
-        app:dynamo_id="button_1" />
+        app:dynamo_id="button_1"
+        android:layout_below="@+id/dynamo_text_view"
+        android:layout_alignEnd="@+id/dynamo_edit_text" />
     <com.example.dynamoui.views.DynamoImageView
         android:id="@+id/dynamo_image_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_below="@id/dynamo_button"
-        app:dynamo_id="image_view_1" />
+        app:dynamo_id="image_view_1"
+        android:layout_above="@+id/dynamo_edit_text"
+        android:layout_toStartOf="@+id/dynamo_web_view" />
     <com.example.dynamoui.views.DynamoWebView
         android:id="@+id/dynamo_web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/dynamo_image_view"
-        app:dynamo_id="web_view_1" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:dynamo_id="web_view_1"
+        android:layout_above="@+id/dynamo_edit_text"
+        android:layout_alignEnd="@+id/dynamo_button" />
+    <com.example.dynamoui.views.DynamoEditText
+        android:id="@+id/dynamo_edit_text"
+        android:layout_width="500dp"
+        android:layout_height="100dp"
+        app:dynamo_id="edit_text_1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

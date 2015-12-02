@@ -45,6 +45,9 @@ public class DynamoButton extends Button {
     private void initializeListener(Context context, AttributeSet attrs) {
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
+        if(mContext == null || mContext.getFirebaseRef() == null) {
+            return;
+        }
         mRef = mContext.getFirebaseRef().child("buttons").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {

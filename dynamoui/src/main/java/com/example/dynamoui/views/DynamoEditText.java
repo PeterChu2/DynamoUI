@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.example.dynamoui.core.Dynamo;
 import com.example.dynamoui.core.DynamoContextImpl;
@@ -16,29 +16,29 @@ import com.firebase.client.ValueEventListener;
 import java.util.HashMap;
 
 /**
- * Created by peter on 27/11/15.
+ * Created by peter on 01/12/15.
  */
-public class DynamoTextView extends TextView {
+public class DynamoEditText extends EditText {
     private DynamoContextImpl mContext;
     private Firebase mRef;
     private String mDynamoId;
 
-    public DynamoTextView(Context context) {
+    public DynamoEditText(Context context) {
         super(context);
         initializeListener(null, null);
     }
 
-    public DynamoTextView(Context context, AttributeSet attrs) {
+    public DynamoEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeListener(context, attrs);
     }
 
-    public DynamoTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DynamoEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeListener(context, attrs);
     }
 
-    public DynamoTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DynamoEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initializeListener(context, attrs);
     }
@@ -48,11 +48,14 @@ public class DynamoTextView extends TextView {
             throw new RuntimeException("dynamoId must be specified in an attribute in the xml.");
         }
         mContext = (DynamoContextImpl) Dynamo.getContext();
+        if(attrs == null) {
+            return;
+        }
         mDynamoId = mContext.getDynamoId(context, attrs);
         if(mContext == null || mContext.getFirebaseRef() == null) {
             return;
         }
-        mRef = mContext.getFirebaseRef().child("text_views").child(mDynamoId);
+        mRef = mContext.getFirebaseRef().child("edit_texts").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -64,23 +67,28 @@ public class DynamoTextView extends TextView {
                         if (value != null) {
                             String text = value.get("text");
                             if (text != null) {
-                                DynamoTextView.this.setText(text);
+                                DynamoEditText.this.setText(text);
                             }
                             String color = value.get("color");
                             if (color != null) {
                                 ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoTextView.this.setBackground(background);
+                                DynamoEditText.this.setBackground(background);
                             }
                             String fontColor = value.get("font_color");
                             if (fontColor != null) {
-                                DynamoTextView.this.setTextColor(Color.parseColor(fontColor));
+                                DynamoEditText.this.setTextColor(Color.parseColor(fontColor));
                             }
                             String fontSize = value.get("font_size");
-                            if(fontSize != null) {
-                                DynamoTextView.this.setTextSize(Float.valueOf(fontSize));
+                            if (fontSize != null) {
+                                DynamoEditText.this.setTextSize(Float.valueOf(fontSize));
+                            }
+                            String placeHolderText = value.get("input_placeholder");
+                            if (placeHolderText != null) {
+                                DynamoEditText.this.setHint(placeHolderText);
                             }
                         }
                     }
+
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
                         // NOP

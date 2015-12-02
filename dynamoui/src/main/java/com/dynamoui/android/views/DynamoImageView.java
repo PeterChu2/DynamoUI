@@ -34,11 +34,6 @@ public class DynamoImageView extends ImageView {
         initializeListener(context, attrs);
     }
 
-    public DynamoImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initializeListener(context, attrs);
-    }
-
     public DynamoImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeListener(context, attrs);

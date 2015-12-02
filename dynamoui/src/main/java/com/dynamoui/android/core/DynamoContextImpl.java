@@ -28,15 +28,15 @@ public class DynamoContextImpl implements DynamoContext {
         mRef = new Firebase(String.format("%s/%s", Dynamo.END_POINT, appName));
         if(sTheme != null) {
             if ("DARK".equals(sTheme)) {
-                context.setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
+                context.setTheme(R.style.Theme_AppCompat_Light_DarkActionBar1);
             } else if ("LIGHT".equals(sTheme)) {
-                context.setTheme(R.style.Theme_AppCompat_Light);
+                context.setTheme(R.style.Theme_AppCompat_Light1);
             } else if ("DEFAULT".equals(sTheme)) {
-                context.setTheme(R.style.Theme_AppCompat);
+                context.setTheme(R.style.Theme_AppCompat1);
             } else if ("NO BAR".equals(sTheme)) {
-                context.setTheme(R.style.Theme_AppCompat_NoActionBar);
+                context.setTheme(R.style.Theme_AppCompat_NoActionBar1);
             } else if ("COMPACT MENU".equals(sTheme)) {
-                context.setTheme(R.style.Theme_AppCompat_CompactMenu);
+                context.setTheme(R.style.Theme_AppCompat_CompactMenu1);
             }
         } else {
             initializeThemeListener(context);
@@ -47,7 +47,9 @@ public class DynamoContextImpl implements DynamoContext {
     }
     public String getDynamoId(Context context, AttributeSet attrs) {
         TypedArray values = context.obtainStyledAttributes(attrs, R.styleable.DynamoButton);
-        return values.getString(R.styleable.DynamoButton_dynamo_id);
+        String id = values.getString(R.styleable.DynamoButton_dynamo_id);
+        values.recycle();
+        return id;
     }
     private void initializeThemeListener(final Context context) {
         final Firebase themeRef = mRef.child("theme");

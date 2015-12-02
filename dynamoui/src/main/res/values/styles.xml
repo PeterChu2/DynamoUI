@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AppCompat.Light.DarkActionBar1" parent="Base.Theme.AppCompat.Light.DarkActionBar"/>
+    <style name="Theme.AppCompat.Light1" parent="Base.Theme.AppCompat.Light"/>
+    <style name="Theme.AppCompat1" parent="Base.Theme.AppCompat"/>
+    <style name="Theme.AppCompat.NoActionBar1">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.AppCompat.CompactMenu1" parent="Base.Theme.AppCompat.CompactMenu"/>
+</resources>

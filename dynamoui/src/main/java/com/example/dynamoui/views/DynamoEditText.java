@@ -38,11 +38,6 @@ public class DynamoEditText extends EditText {
         initializeListener(context, attrs);
     }
 
-    public DynamoEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initializeListener(context, attrs);
-    }
-
     private void initializeListener(Context context, AttributeSet attrs) {
         if (context == null) {
             throw new RuntimeException("dynamoId must be specified in an attribute in the xml.");

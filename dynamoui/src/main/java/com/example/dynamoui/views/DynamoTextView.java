@@ -38,11 +38,6 @@ public class DynamoTextView extends TextView {
         initializeListener(context, attrs);
     }
 
-    public DynamoTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initializeListener(context, attrs);
-    }
-
     private void initializeListener(Context context, AttributeSet attrs) {
         if (context == null) {
             throw new RuntimeException("dynamoId must be specified in an attribute in the xml.");

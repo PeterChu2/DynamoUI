@@ -39,11 +39,6 @@ public class DynamoWebView extends WebView {
         initializeListener(context, attrs);
     }
 
-    public DynamoWebView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initializeListener(context, attrs);
-    }
-
     private void initializeListener(final Context context, AttributeSet attrs) {
         if (context == null) {
             throw new RuntimeException("dynamoId must be specified in an attribute in the xml.");

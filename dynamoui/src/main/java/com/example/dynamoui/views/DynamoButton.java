@@ -37,11 +37,6 @@ public class DynamoButton extends Button {
         initializeListener(context, attrs);
     }
 
-    public DynamoButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initializeListener(context, attrs);
-    }
-
     private void initializeListener(Context context, AttributeSet attrs) {
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);

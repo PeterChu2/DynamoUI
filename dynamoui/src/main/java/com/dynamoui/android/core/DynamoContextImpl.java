@@ -1,4 +1,4 @@
-package com.example.dynamoui.core;
+package com.dynamoui.android.core;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +20,6 @@ public class DynamoContextImpl implements DynamoContext {
     private static String sTheme = null;
 
     protected DynamoContextImpl() {
-
     }
 
     @Override

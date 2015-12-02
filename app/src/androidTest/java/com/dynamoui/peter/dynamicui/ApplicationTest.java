@@ -1,4 +1,4 @@
-package com.example.peter.dynamicui;
+package com.dynamoui.peter.dynamicui;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

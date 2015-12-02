@@ -1,9 +1,9 @@
-package com.example.peter.dynamicui;
+package com.dynamoui.peter.dynamicui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.dynamoui.core.Dynamo;
+import com.dynamoui.android.core.Dynamo;
 
 public class MainActivity extends AppCompatActivity {
 

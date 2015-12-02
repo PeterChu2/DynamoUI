@@ -1,13 +1,14 @@
-package com.example.dynamoui.views;
+package com.dynamoui.android.views;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.widget.Button;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import com.example.dynamoui.core.Dynamo;
-import com.example.dynamoui.core.DynamoContextImpl;
+import com.dynamoui.android.core.Dynamo;
+import com.dynamoui.android.core.DynamoContextImpl;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -18,32 +19,37 @@ import java.util.HashMap;
 /**
  * Created by peter on 28/11/15.
  */
-public class DynamoButton extends Button {
+public class DynamoWebView extends WebView {
     private DynamoContextImpl mContext;
     private Firebase mRef;
     private String mDynamoId;
-    public DynamoButton(Context context) {
+
+    public DynamoWebView(Context context) {
         super(context);
         initializeListener(null, null);
     }
 
-    public DynamoButton(Context context, AttributeSet attrs) {
+    public DynamoWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeListener(context, attrs);
     }
 
-    public DynamoButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DynamoWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeListener(context, attrs);
     }
 
-    private void initializeListener(Context context, AttributeSet attrs) {
+    private void initializeListener(final Context context, AttributeSet attrs) {
+        if (context == null) {
+            throw new RuntimeException("dynamoId must be specified in an attribute in the xml.");
+        }
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
+        DynamoWebView.this.setWebViewClient(new WebViewClient());
         if(mContext == null || mContext.getFirebaseRef() == null) {
             return;
         }
-        mRef = mContext.getFirebaseRef().child("buttons").child(mDynamoId);
+        mRef = mContext.getFirebaseRef().child("web_views").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -53,33 +59,28 @@ public class DynamoButton extends Button {
                             value = (HashMap<String, String>) dataSnapshot.getValue();
                         }
                         if (value != null) {
-                            String text = value.get("text");
-                            if (text != null) {
-                                DynamoButton.this.setText(text);
+                            String pageUrl = value.get("page_url");
+                            if (pageUrl != null && !pageUrl.isEmpty()) {
+                                DynamoWebView.this.loadUrl(pageUrl);
                             }
+
                             String color = value.get("color");
-                            if (color != null) {
+                            if (color != null && !color.isEmpty()) {
                                 ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoButton.this.setBackground(background);
+                                DynamoWebView.this.setBackground(background);
                             }
-                            String fontColor = value.get("font_color");
-                            if (fontColor != null) {
-                                DynamoButton.this.setTextColor(Color.parseColor(fontColor));
-                            }
-                            String fontSize = value.get("font_size");
-                            if(fontSize != null) {
-                                DynamoButton.this.setTextSize(Float.valueOf(fontSize));
-                            }
+
                             String width = value.get("width");
                             String height = value.get("height");
-                            if(width != null) {
-                                DynamoButton.this.getLayoutParams().width = Integer.valueOf(width);
+                            if(width != null && !width.isEmpty()) {
+                                DynamoWebView.this.getLayoutParams().width = Integer.valueOf(width);
                             }
-                            if(height != null) {
-                                DynamoButton.this.getLayoutParams().height = Integer.valueOf(height);
+                            if(height != null && !height.isEmpty()) {
+                                DynamoWebView.this.getLayoutParams().height = Integer.valueOf(height);
                             }
                         }
                     }
+
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
                         // NOP

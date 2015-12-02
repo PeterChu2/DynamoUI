@@ -1,40 +1,45 @@
-package com.example.dynamoui.views;
+package com.dynamoui.android.views;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
-import com.example.dynamoui.core.Dynamo;
-import com.example.dynamoui.core.DynamoContextImpl;
+import com.dynamoui.android.core.Dynamo;
+import com.dynamoui.android.core.DynamoContextImpl;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.koushikdutta.ion.Ion;
 
 import java.util.HashMap;
 
 /**
  * Created by peter on 28/11/15.
  */
-public class DynamoWebView extends WebView {
+public class DynamoImageView extends ImageView {
     private DynamoContextImpl mContext;
     private Firebase mRef;
     private String mDynamoId;
 
-    public DynamoWebView(Context context) {
+    public DynamoImageView(Context context) {
         super(context);
         initializeListener(null, null);
     }
 
-    public DynamoWebView(Context context, AttributeSet attrs) {
+    public DynamoImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeListener(context, attrs);
     }
 
-    public DynamoWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DynamoImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initializeListener(context, attrs);
+    }
+
+    public DynamoImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeListener(context, attrs);
     }
@@ -45,11 +50,11 @@ public class DynamoWebView extends WebView {
         }
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
-        DynamoWebView.this.setWebViewClient(new WebViewClient());
+
         if(mContext == null || mContext.getFirebaseRef() == null) {
             return;
         }
-        mRef = mContext.getFirebaseRef().child("web_views").child(mDynamoId);
+        mRef = mContext.getFirebaseRef().child("image_views").child(mDynamoId);
         mRef.addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -59,24 +64,24 @@ public class DynamoWebView extends WebView {
                             value = (HashMap<String, String>) dataSnapshot.getValue();
                         }
                         if (value != null) {
-                            String pageUrl = value.get("page_url");
-                            if (pageUrl != null) {
-                                DynamoWebView.this.loadUrl(pageUrl);
+                            String imgUrl = value.get("img_url");
+                            if (imgUrl != null && !imgUrl.isEmpty()) {
+                                Ion.with(DynamoImageView.this)
+                                        .load(imgUrl);
                             }
-
                             String color = value.get("color");
-                            if (color != null) {
+                            if (color != null && !color.isEmpty()) {
                                 ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoWebView.this.setBackground(background);
+                                DynamoImageView.this.setBackground(background);
                             }
 
                             String width = value.get("width");
                             String height = value.get("height");
-                            if(width != null) {
-                                DynamoWebView.this.getLayoutParams().width = Integer.valueOf(width);
+                            if(width != null && !width.isEmpty()) {
+                                DynamoImageView.this.getLayoutParams().width = Integer.valueOf(width);
                             }
-                            if(height != null) {
-                                DynamoWebView.this.getLayoutParams().height = Integer.valueOf(height);
+                            if(height != null && !height.isEmpty()) {
+                                DynamoImageView.this.getLayoutParams().height = Integer.valueOf(height);
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-package com.example.peter.dynamicui;
+package com.dynamoui.peter.dynamicui;
 
 import org.junit.Test;
 

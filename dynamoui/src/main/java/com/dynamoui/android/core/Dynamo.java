@@ -1,4 +1,4 @@
-package com.example.dynamoui.core;
+package com.dynamoui.android.core;
 
 /**
  * Created by peter on 28/11/15.

@@ -1,4 +1,4 @@
-package com.example.dynamoui;
+package com.dynamoui.android;
 
 import org.junit.Test;
 

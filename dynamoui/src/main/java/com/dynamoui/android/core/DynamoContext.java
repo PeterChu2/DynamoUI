@@ -1,4 +1,4 @@
-package com.example.dynamoui.core;
+package com.dynamoui.android.core;
 
 import android.content.Context;
 

@@ -3,7 +3,9 @@ package com.dynamoui.android.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 
 import com.example.dynamoui.R;
@@ -18,6 +20,7 @@ import com.firebase.client.ValueEventListener;
 public class DynamoContextImpl implements DynamoContext {
     private Firebase mRef;
     private static String sTheme = null;
+    private static final String THEME_PREFS = "DYNAMO_PREF_KEY";
 
     protected DynamoContextImpl() {
     }
@@ -26,6 +29,10 @@ public class DynamoContextImpl implements DynamoContext {
     public synchronized void init(Context context, String appName) {
         Firebase.setAndroidContext(context);
         mRef = new Firebase(String.format("%s/%s", Dynamo.END_POINT, appName));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if(prefs.contains(THEME_PREFS) && sTheme == null) {
+            sTheme = prefs.getString(THEME_PREFS, "DEFAULT");
+        }
         if(sTheme != null) {
             if ("DARK".equals(sTheme)) {
                 context.setTheme(R.style.Theme_AppCompat_Light_DarkActionBar1);
@@ -63,12 +70,15 @@ public class DynamoContextImpl implements DynamoContext {
                     }
                     if (theme != null) {
                         sTheme = theme;
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        SharedPreferences.Editor e = prefs.edit();
+                        e.putString(THEME_PREFS, theme);
+                        e.apply();
                         Activity activity = (Activity) context;
                         activity.finish();
                         activity.startActivity(new Intent(activity, activity.getClass()));
                     }
                 }
-
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     // NOP

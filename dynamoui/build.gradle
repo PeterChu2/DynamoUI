@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/PeterChu2/DynamoUI'
     gitUrl = 'https://github.com/PeterChu2/DynamoUI.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.2'
 
     developerId = 'peterchu2'
     developerName = 'Peter Chu'
@@ -26,7 +26,7 @@ ext {
 
 apply plugin: 'maven'
 group = 'com.dynamoui.android'
-version = '1.0.0'
+version = '1.0.2'
 
 uploadArchives {
     repositories {
@@ -46,10 +46,10 @@ android {
         exclude 'META-INF/NOTICE'
     }
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 10
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 3
+        versionName "1.0.2"
     }
     buildTypes {
         release {

@@ -7,11 +7,7 @@ Integrate into your app:
 ---------------------
 1.  Add module to your application's build.gradle.
 ```
-compile 'com.example.dynamoui:dynamoui:1.0@aar'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.firebase:firebase-client-android:2.4.1+'
-    compile 'com.koushikdutta.ion:ion:2.+'
+  compile 'com.dynamoui.core:dynamoui:1.0.+'
 ```
 Add this to your android object in your app's build.gradle:
 ```
@@ -27,7 +23,6 @@ Add this to your project's build.gradle.
 allprojects {
     repositories {
         jcenter()
-        mavenLocal()
     }
 }
 ```

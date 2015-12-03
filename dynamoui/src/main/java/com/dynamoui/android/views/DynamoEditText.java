@@ -65,17 +65,48 @@ public class DynamoEditText extends EditText {
                                 DynamoEditText.this.setText(text);
                             }
                             String color = value.get("color");
+
                             if (color != null && !color.isEmpty()) {
-                                ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoEditText.this.setBackground(background);
+                                try {
+                                    ColorDrawable background = new ColorDrawable(Color.parseColor(color));
+                                    DynamoEditText.this.setBackground(background);
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
+
                             String fontColor = value.get("font_color");
                             if (fontColor != null && !fontColor.isEmpty()) {
-                                DynamoEditText.this.setTextColor(Color.parseColor(fontColor));
+                                try {
+                                    DynamoEditText.this.setTextColor(Color.parseColor(fontColor));
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
+
                             String fontSize = value.get("font_size");
                             if (fontSize != null && !fontSize.isEmpty()) {
-                                DynamoEditText.this.setTextSize(Float.valueOf(fontSize));
+                                try {
+                                    DynamoEditText.this.setTextSize(Float.valueOf(fontSize));
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
+                            }
+                            String width = value.get("width");
+                            String height = value.get("height");
+                            if (width != null && !width.isEmpty()) {
+                                try {
+                                    DynamoEditText.this.getLayoutParams().width = Integer.valueOf(width);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
+                            }
+                            if (height != null && !height.isEmpty()) {
+                                try {
+                                    DynamoEditText.this.getLayoutParams().height = Integer.valueOf(height);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                             String placeHolderText = value.get("input_placeholder");
                             if (placeHolderText != null && !placeHolderText.isEmpty()) {

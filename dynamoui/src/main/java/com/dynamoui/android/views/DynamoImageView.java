@@ -66,17 +66,29 @@ public class DynamoImageView extends ImageView {
                             }
                             String color = value.get("color");
                             if (color != null && !color.isEmpty()) {
-                                ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoImageView.this.setBackground(background);
+                                try {
+                                    ColorDrawable background = new ColorDrawable(Color.parseColor(color));
+                                    DynamoImageView.this.setBackground(background);
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
 
                             String width = value.get("width");
                             String height = value.get("height");
                             if(width != null && !width.isEmpty()) {
-                                DynamoImageView.this.getLayoutParams().width = Integer.valueOf(width);
+                                try {
+                                    DynamoImageView.this.getLayoutParams().width = Integer.valueOf(width);
+                                } catch(NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                             if(height != null && !height.isEmpty()) {
-                                DynamoImageView.this.getLayoutParams().height = Integer.valueOf(height);
+                                try {
+                                    DynamoImageView.this.getLayoutParams().height = Integer.valueOf(height);
+                                } catch(NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                         }
                     }

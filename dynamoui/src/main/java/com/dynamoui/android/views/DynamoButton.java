@@ -22,6 +22,7 @@ public class DynamoButton extends Button {
     private DynamoContextImpl mContext;
     private Firebase mRef;
     private String mDynamoId;
+
     public DynamoButton(Context context) {
         super(context);
         initializeListener(null, null);
@@ -40,7 +41,7 @@ public class DynamoButton extends Button {
     private void initializeListener(Context context, AttributeSet attrs) {
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
-        if(mContext == null || mContext.getFirebaseRef() == null) {
+        if (mContext == null || mContext.getFirebaseRef() == null) {
             return;
         }
         mRef = mContext.getFirebaseRef().child("buttons").child(mDynamoId);
@@ -58,28 +59,52 @@ public class DynamoButton extends Button {
                                 DynamoButton.this.setText(text);
                             }
                             String color = value.get("color");
+
                             if (color != null && !color.isEmpty()) {
-                                ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoButton.this.setBackground(background);
+                                try {
+                                    ColorDrawable background = new ColorDrawable(Color.parseColor(color));
+                                    DynamoButton.this.setBackground(background);
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
+
                             String fontColor = value.get("font_color");
                             if (fontColor != null && !fontColor.isEmpty()) {
-                                DynamoButton.this.setTextColor(Color.parseColor(fontColor));
+                                try {
+                                    DynamoButton.this.setTextColor(Color.parseColor(fontColor));
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
+
                             String fontSize = value.get("font_size");
-                            if(fontSize != null && !fontSize.isEmpty()) {
-                                DynamoButton.this.setTextSize(Float.valueOf(fontSize));
+                            if (fontSize != null && !fontSize.isEmpty()) {
+                                try {
+                                    DynamoButton.this.setTextSize(Float.valueOf(fontSize));
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                             String width = value.get("width");
                             String height = value.get("height");
-                            if(width != null && !width.isEmpty()) {
-                                DynamoButton.this.getLayoutParams().width = Integer.valueOf(width);
+                            if (width != null && !width.isEmpty()) {
+                                try {
+                                    DynamoButton.this.getLayoutParams().width = Integer.valueOf(width);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
-                            if(height != null && !height.isEmpty()) {
-                                DynamoButton.this.getLayoutParams().height = Integer.valueOf(height);
+                            if (height != null && !height.isEmpty()) {
+                                try {
+                                    DynamoButton.this.getLayoutParams().height = Integer.valueOf(height);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                         }
                     }
+
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
                         // NOP

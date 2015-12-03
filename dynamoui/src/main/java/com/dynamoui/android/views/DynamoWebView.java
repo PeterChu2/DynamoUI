@@ -46,7 +46,7 @@ public class DynamoWebView extends WebView {
         mContext = (DynamoContextImpl) Dynamo.getContext();
         mDynamoId = mContext.getDynamoId(context, attrs);
         DynamoWebView.this.setWebViewClient(new WebViewClient());
-        if(mContext == null || mContext.getFirebaseRef() == null) {
+        if (mContext == null || mContext.getFirebaseRef() == null) {
             return;
         }
         mRef = mContext.getFirebaseRef().child("web_views").child(mDynamoId);
@@ -66,17 +66,29 @@ public class DynamoWebView extends WebView {
 
                             String color = value.get("color");
                             if (color != null && !color.isEmpty()) {
-                                ColorDrawable background = new ColorDrawable(Color.parseColor(color));
-                                DynamoWebView.this.setBackground(background);
+                                try {
+                                    ColorDrawable background = new ColorDrawable(Color.parseColor(color));
+                                    DynamoWebView.this.setBackground(background);
+                                } catch (IllegalArgumentException e) {
+                                    // NOP
+                                }
                             }
 
                             String width = value.get("width");
                             String height = value.get("height");
-                            if(width != null && !width.isEmpty()) {
-                                DynamoWebView.this.getLayoutParams().width = Integer.valueOf(width);
+                            if (width != null && !width.isEmpty()) {
+                                try {
+                                    DynamoWebView.this.getLayoutParams().width = Integer.valueOf(width);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
-                            if(height != null && !height.isEmpty()) {
-                                DynamoWebView.this.getLayoutParams().height = Integer.valueOf(height);
+                            if (height != null && !height.isEmpty()) {
+                                try {
+                                    DynamoWebView.this.getLayoutParams().height = Integer.valueOf(height);
+                                } catch (NumberFormatException e) {
+                                    // NOP
+                                }
                             }
                         }
                     }
